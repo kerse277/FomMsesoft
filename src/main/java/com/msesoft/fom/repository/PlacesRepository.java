@@ -1,8 +1,8 @@
-package com.msesoft.sample.repository;
+package com.msesoft.fom.repository;
 
 
-import com.msesoft.sample.domain.Person;
-import com.msesoft.sample.domain.Places;
+import com.msesoft.fom.domain.Person;
+import com.msesoft.fom.domain.Places;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;

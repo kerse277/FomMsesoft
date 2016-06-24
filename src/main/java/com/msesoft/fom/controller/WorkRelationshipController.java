@@ -1,8 +1,8 @@
-package com.msesoft.sample.controller;
+package com.msesoft.fom.controller;
 
 
-import com.msesoft.sample.business.WorkRelationshipBS;
-import com.msesoft.sample.relationshipdomain.WorkRelationship;
+import com.msesoft.fom.business.WorkRelationshipBS;
+import com.msesoft.fom.relationshipdomain.WorkRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

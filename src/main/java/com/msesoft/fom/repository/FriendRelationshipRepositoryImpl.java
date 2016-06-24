@@ -1,6 +1,6 @@
-package com.msesoft.sample.repository;
+package com.msesoft.fom.repository;
 
-import com.msesoft.sample.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.relationshipdomain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 

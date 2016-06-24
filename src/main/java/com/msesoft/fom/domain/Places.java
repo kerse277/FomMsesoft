@@ -1,4 +1,4 @@
-package com.msesoft.sample.domain;
+package com.msesoft.fom.domain;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
-package com.msesoft.sample.business;
+package com.msesoft.fom.business;
 
-import com.msesoft.sample.relationshipdomain.WorkRelationship;
-import com.msesoft.sample.repository.WorkRelationshipRepository;
+import com.msesoft.fom.repository.WorkRelationshipRepository;
+import com.msesoft.fom.relationshipdomain.WorkRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

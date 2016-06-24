@@ -1,6 +1,6 @@
-package com.msesoft.sample.controller;
+package com.msesoft.fom.controller;
 
-import com.msesoft.sample.domain.Sample;
+import com.msesoft.fom.domain.Sample;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

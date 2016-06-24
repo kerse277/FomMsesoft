@@ -1,10 +1,7 @@
 package controllerTest;
 
-import com.msesoft.sample.domain.Person;
+import com.msesoft.fom.domain.Person;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 /**

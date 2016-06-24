@@ -1,7 +1,7 @@
-package com.msesoft.sample.controller;
+package com.msesoft.fom.controller;
 
-import com.msesoft.sample.business.PersonBS;
-import com.msesoft.sample.domain.Person;
+import com.msesoft.fom.domain.Person;
+import com.msesoft.fom.business.PersonBS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

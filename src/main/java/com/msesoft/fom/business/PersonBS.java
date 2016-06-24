@@ -1,7 +1,7 @@
-package com.msesoft.sample.business;
+package com.msesoft.fom.business;
 
-import com.msesoft.sample.domain.Person;
-import com.msesoft.sample.repository.PersonRepository;
+import com.msesoft.fom.domain.Person;
+import com.msesoft.fom.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

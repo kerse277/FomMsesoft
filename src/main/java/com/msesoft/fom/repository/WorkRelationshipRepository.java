@@ -1,7 +1,7 @@
-package com.msesoft.sample.repository;
+package com.msesoft.fom.repository;
 
 
-import com.msesoft.sample.relationshipdomain.WorkRelationship;
+import com.msesoft.fom.relationshipdomain.WorkRelationship;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;

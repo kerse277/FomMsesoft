@@ -1,13 +1,13 @@
 package data;
 
-import com.msesoft.sample.domain.Person;
-import com.msesoft.sample.domain.Places;
-import com.msesoft.sample.relationshipdomain.FriendRelationship;
-import com.msesoft.sample.relationshipdomain.WorkRelationship;
-import com.msesoft.sample.repository.FriendRelationshipRepository;
-import com.msesoft.sample.repository.PersonRepository;
-import com.msesoft.sample.repository.PlacesRepository;
-import com.msesoft.sample.repository.WorkRelationshipRepository;
+import com.msesoft.fom.domain.Person;
+import com.msesoft.fom.domain.Places;
+import com.msesoft.fom.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.relationshipdomain.WorkRelationship;
+import com.msesoft.fom.repository.FriendRelationshipRepository;
+import com.msesoft.fom.repository.PersonRepository;
+import com.msesoft.fom.repository.PlacesRepository;
+import com.msesoft.fom.repository.WorkRelationshipRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

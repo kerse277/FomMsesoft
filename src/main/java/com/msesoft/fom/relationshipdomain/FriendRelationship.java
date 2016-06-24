@@ -1,8 +1,7 @@
-package com.msesoft.sample.relationshipdomain;
+package com.msesoft.fom.relationshipdomain;
 
 
-import com.msesoft.sample.domain.Person;
-import com.msesoft.sample.domain.Places;
+import com.msesoft.fom.domain.Person;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -11,16 +10,15 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
-@RelationshipEntity(type = "WORK")
+@RelationshipEntity(type = "FRIEND")
 @Accessors(chain = true)
-public class WorkRelationship {
-
+public class FriendRelationship {
     @GraphId
     private Long id;
 
     @Getter
     @Setter
-    private String workType;
+    private String friendType;
 
     @Getter
     @Setter
@@ -30,11 +28,12 @@ public class WorkRelationship {
     @Getter
     @Setter
     @EndNode
-    private Places endNode;
+    private Person endNode;
 
     @Override
     public String toString () {
         return String.format("Relation[id=%s, startNode='%s', endNode='%s', type='%s']", id,
-                startNode, endNode,workType);
+                startNode, endNode,friendType);
     }
+
 }

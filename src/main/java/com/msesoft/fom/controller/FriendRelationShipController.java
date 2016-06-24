@@ -1,7 +1,7 @@
-package com.msesoft.sample.controller;
+package com.msesoft.fom.controller;
 
-import com.msesoft.sample.business.FriendRelationshipBS;
-import com.msesoft.sample.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.business.FriendRelationshipBS;
+import com.msesoft.fom.relationshipdomain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
