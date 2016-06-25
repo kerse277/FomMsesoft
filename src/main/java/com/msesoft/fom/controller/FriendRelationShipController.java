@@ -4,9 +4,7 @@ import com.msesoft.fom.business.FriendRelationshipBS;
 import com.msesoft.fom.relationshipdomain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,20 +19,20 @@ public class FriendRelationShipController {
      FriendRelationshipBS friendRelationshipBS;
 
 
-    @PostMapping(value = "/findFriendAll")
+    @GetMapping(value = "/findFriendAll")
     @ResponseBody
-    public List<FriendRelationship> findFriendAll (String person) {
+    public List<FriendRelationship> findFriendAll (@RequestParam("person") String person) {
         return friendRelationshipBS.findFriendAll(person);
     }
 
-    @PostMapping(value = "/findFriendByType")
+    @GetMapping(value = "/findFriendByType")
     @ResponseBody
-    public List<FriendRelationship> findFriendByType(String person, String type) {
+    public List<FriendRelationship> findFriendByType(@RequestParam("person") String person,@RequestParam("type") String type) {
         return  friendRelationshipBS.findFriendByType(person,type);
     }
-    @PostMapping(value = "/friendWay")
+    @GetMapping(value = "/friendWay")
     @ResponseBody
-    public List<FriendRelationship> friendWay(int limit, String startNode, String endNode, int length){
+    public List<FriendRelationship> friendWay(@RequestParam("limit") int limit,@RequestParam("startNode") String startNode,@RequestParam("endNode") String endNode,@RequestParam("length") int length){
         return friendRelationshipBS.friendWay(limit,startNode,endNode,length);
     }
 

@@ -26,4 +26,9 @@ public class PersonBS {
     public List<Person> workNotFriend(String person) {
         return personRepository.workNotFriend(person);
     }
+
+    public Person insertPerson(Person person) {
+        return personRepository.save(person);
+    }
+
 }
