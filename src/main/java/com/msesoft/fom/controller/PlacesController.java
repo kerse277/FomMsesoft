@@ -31,20 +31,29 @@ public class PlacesController {
 
     @GetMapping(value = "getId")
     @ResponseBody
-    public Places place(@RequestParam("id") Long id) {
+    public Places placeGetId(@RequestParam("id") Long id) {
         return placesBS.findOne(id);
     }
 
     @PostMapping(value = "update")
     @ResponseBody
-    public Places update(@RequestParam("id") Long id, @RequestParam("name") String name,@RequestParam("type") String type) {
-        return placesBS.update(id, name,type);
+    public Places update(@RequestBody Places places, @RequestParam("name") String name,@RequestParam("type") String type) {
+        return placesBS.update(places, name,type);
     }
 
     @PostMapping(value = "insert")
     @ResponseBody
-    public Places place(@RequestBody Places place) {
+    public Places placeInsert(@RequestBody Places place) {
         return placesBS.dbInsert(place);
+    }
+
+    @GetMapping(value = "deleteplace")
+    @ResponseBody
+    public Places deletePlaces(@RequestParam("id") Long id){
+        Places places=new Places();
+        places=placesBS.findOne(id);
+        placesBS.deletePlaces(id);
+        return places;
     }
 
     @GetMapping(value = "listNode")

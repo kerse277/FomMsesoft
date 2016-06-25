@@ -49,23 +49,26 @@ public class PlacesBS {
         return placesRepository.findByName(name);
     }
 
-    public Places update(Long id,String name,String type){
+    public Places update(Places places,String name,String type){
 
-        Places place = new Places();
+      places.setName(name)
+            .setType(type);
 
-        place = placesRepository.findOne(id);
 
-        place.setName(name)
-             .setType(type);
+        placesRepository.save(places);
 
-        placesRepository.save(place);
-
-        return place;
+        return places;
     }
 
     public Places dbInsert(Places place) {
 
         return placesRepository.save(place);
+
+    }
+
+    public void deletePlaces(Long id){
+
+        placesRepository.delete(id);
 
     }
 }
