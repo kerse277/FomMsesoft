@@ -24,15 +24,21 @@ public class PersonController {
         return personBS.findByName(name);
     }
 
-    @PostMapping(value = "/findByFirstDegreeFriend")
+    @GetMapping(value = "/findByFirstDegreeFriend")
     @ResponseBody
-    public List<Person> findByFirstDegreeFriend(String nodeName) {
-        return personBS.findByFirstDegreeFriend(nodeName);
+    public List<Person> findByFirstDegreeFriend(@RequestParam("name") String name) {
+        return personBS.findByFirstDegreeFriend(name);
     }
 
-    @PostMapping(value = "/workNotFriend")
+    @GetMapping(value = "/workNotFriend")
     @ResponseBody
-    public List<Person> workNotFriend(String person) {
-        return personBS.workNotFriend(person);
+    public List<Person> workNotFriend(@RequestParam("name") String name) {
+        return personBS.workNotFriend(name);
+    }
+
+    @PostMapping(value = "/insertPerson")
+    @ResponseBody
+    public Person insertPerson(@RequestBody Person person) {
+        return personBS.insertPerson(person);
     }
 }

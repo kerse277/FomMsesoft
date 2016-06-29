@@ -23,7 +23,7 @@ public interface PersonRepository extends GraphRepository<Person> {
             "    RETURN t")
     List<Person> workNotFriend(@Param("person") String person);
 
-
+    Person save(Person person);
 
 }
 
