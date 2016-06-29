@@ -1,6 +1,6 @@
 package com.msesoft.fom.business;
 
-import com.msesoft.fom.repository.FriendRelationshipRepository;
+import com.msesoft.fom.neo.FriendRelationshipRepository;
 import com.msesoft.fom.relationshipdomain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

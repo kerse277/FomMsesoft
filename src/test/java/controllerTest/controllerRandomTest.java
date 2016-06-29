@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by oguz on 23.06.2016.
@@ -66,6 +67,24 @@ public class controllerRandomTest {
         System.out.println(person.getName());
 
     }
+    @Test
+    public void addMPerson () {
+        Person person = new Person()
+                .setId(1L)
+                .setSurname("YILMAZ")
+                .setHoby("Write Code")
+                .setGender("E")
+                .setOccupation("Gazi")
+                .setPhoto("/Home/Oguz/Sample")
+                .setName("OGUZ");
+        String name = "A1";
+        String uri = new String("http://localhost:8081/person/insertMPerson");
+        RestTemplate restTemplate = new RestTemplate();
+        person = restTemplate.postForObject(uri,person,Person.class);
+        System.out.println(person.getName());
+
+    }
+
 
 
     @Test

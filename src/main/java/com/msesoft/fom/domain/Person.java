@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.springframework.data.annotation.Id;
 
 /**
  * Created by oguz on 18.06.2016.
@@ -14,6 +15,8 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class Person {
 
     @GraphId
+    @Id
+    @Setter
     @Getter
     private Long id;
 

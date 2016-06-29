@@ -1,4 +1,4 @@
-package com.msesoft.fom.repository;
+package com.msesoft.fom.neo;
 
 import com.msesoft.fom.relationshipdomain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;

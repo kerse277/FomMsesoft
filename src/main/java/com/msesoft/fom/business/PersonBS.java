@@ -1,7 +1,7 @@
 package com.msesoft.fom.business;
 
 import com.msesoft.fom.domain.Person;
-import com.msesoft.fom.repository.PersonRepository;
+import com.msesoft.fom.neo.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,7 @@ public class PersonBS {
     PersonRepository personRepository;
 
 
+
     public Person findByName(String name) {
         return personRepository.findByName(name);
     }
@@ -30,5 +31,6 @@ public class PersonBS {
     public Person insertPerson(Person person) {
         return personRepository.save(person);
     }
+
 
 }
