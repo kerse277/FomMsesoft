@@ -2,6 +2,7 @@ package com.msesoft.fom.controller;
 
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.business.PersonBS;
+import com.msesoft.fom.mbusiness.MPersonBS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ public class PersonController {
 
     @Autowired
     PersonBS personBS;
+
+    @Autowired
+    MPersonBS mMPersonBS;
 
     @GetMapping(value = "/findByName")
     @ResponseBody
@@ -41,4 +45,11 @@ public class PersonController {
     public Person insertPerson(@RequestBody Person person) {
         return personBS.insertPerson(person);
     }
+
+    @PostMapping(value = "/insertMPerson")
+    @ResponseBody
+    public Person insertMperson(@RequestBody Person person) {
+        return mMPersonBS.insert(person);
+    }
+
 }
