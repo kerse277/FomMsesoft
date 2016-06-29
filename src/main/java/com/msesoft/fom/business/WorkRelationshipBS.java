@@ -1,7 +1,7 @@
 package com.msesoft.fom.business;
 
-import com.msesoft.fom.neo.WorkRelationshipRepository;
-import com.msesoft.fom.relationshipdomain.WorkRelationship;
+import com.msesoft.fom.repository.WorkRepository;
+import com.msesoft.fom.domain.WorkRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,23 +11,23 @@ import java.util.List;
 public class WorkRelationshipBS {
 
     @Autowired
-    WorkRelationshipRepository workRelationshipRepository;
+    WorkRepository workRepository;
 
     public WorkRelationship findNodeWorkType(Long id){
 
-        return workRelationshipRepository.findNodeWorkType(id);
+        return workRepository.findNodeWorkType(id);
 
     }
 
     public List<WorkRelationship> findNodeWorkTypeForPlace(String placeName,String workType){
 
-        return workRelationshipRepository.findNodeWorkTypeForPlace(placeName,workType);
+        return workRepository.findNodeWorkTypeForPlace(placeName,workType);
 
     }
 
     public List<WorkRelationship> findByWorkType(String type){
 
-        return workRelationshipRepository.findByWorkType(type);
+        return workRepository.findByWorkType(type);
 
     }
 

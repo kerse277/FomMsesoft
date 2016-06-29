@@ -2,12 +2,12 @@ package data;
 
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.domain.Places;
-import com.msesoft.fom.relationshipdomain.FriendRelationship;
-import com.msesoft.fom.relationshipdomain.WorkRelationship;
-import com.msesoft.fom.neo.FriendRelationshipRepository;
-import com.msesoft.fom.neo.PersonRepository;
-import com.msesoft.fom.neo.PlacesRepository;
-import com.msesoft.fom.neo.WorkRelationshipRepository;
+import com.msesoft.fom.domain.FriendRelationship;
+import com.msesoft.fom.domain.WorkRelationship;
+import com.msesoft.fom.repository.FriendRepository;
+import com.msesoft.fom.repository.PersonRepository;
+import com.msesoft.fom.repository.PlacesRepository;
+import com.msesoft.fom.repository.WorkRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by kerse on 23.06.2016.
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 public class InsertTestData {
     @Autowired
     PlacesRepository placesRepository;
@@ -30,10 +30,10 @@ public class InsertTestData {
     PersonRepository personRepository;
 
     @Autowired
-    WorkRelationshipRepository workRelationshipRepository;
+    WorkRepository workRepository;
 
     @Autowired
-    FriendRelationshipRepository friendRelationshipRepository;
+    FriendRepository friendRepository;
 
     Person friendPerson1 = new Person();
     Person friendPerson2 = new Person();
@@ -92,7 +92,7 @@ public class InsertTestData {
             rn2=r.nextInt(placesName.length-1);
             WorkRelationship wR = new WorkRelationship();
             Person person = new Person();
-            person = personRepository.findByName("A"+i);
+            person = personRepository.findByFirstName("A"+i);
             Places places= new Places();
 
             places = placesRepository.findByName(placesName[rn2]);
@@ -100,26 +100,26 @@ public class InsertTestData {
                 wR.setStartNode(person)
                         .setEndNode(places)
                         .setWorkType(hospital[i%2]);
-                workRelationshipRepository.save(wR);
+                workRepository.save(wR);
             }
             else if (places.getType().equals(placesType[1])) {
                 wR.setStartNode(person)
                         .setEndNode(places)
                         .setWorkType(engineer[i%2]);
-                workRelationshipRepository.save(wR);
+                workRepository.save(wR);
             }
             else if (places.getType().equals(placesType[2])) {
                 wR.setStartNode(person)
                         .setEndNode(places)
                         .setWorkType(school[i%2]);
-                workRelationshipRepository.save(wR);
+                workRepository.save(wR);
 
             }
             else if (places.getType().equals(placesType[3])) {
                 wR.setStartNode(person)
                         .setEndNode(places)
                         .setWorkType(sport[i%2]);
-                workRelationshipRepository.save(wR);
+                workRepository.save(wR);
             }
         }
     }
@@ -128,7 +128,7 @@ public class InsertTestData {
     public void testPersonRepositoryInsert () {
 
         personRepository.deleteAll();
-        String genders [] = {"M","F"};
+        char genders [] = {'M','F'};
         String Hoby [] = {"Music","Art","Play Game"};
 
         for(int i= 1; i<=200; i++) {
@@ -136,18 +136,19 @@ public class InsertTestData {
             Person person = new Person()
                     .setGender(genders[i%2])
                     .setHoby(Hoby[i%3])
-                    .setName("A"+i)
-                    .setPhoto("/home/oguz/IMG/img.jpeg")
-                    .setSurname("B"+i)
-                    .setTc("100000000"+i);
+                    .setFirstName("A"+i)
+                    .setPhoto("/home/photo/img.jpeg")
+                    .setLastName("B"+i)
+                    .setEmail("ab"+i+"@fom.com")
+                    .setUniqueId(UUID.randomUUID().toString());
             person =personRepository.save(person);
-            System.out.println(person.getName());
+            System.out.println(person.getEmail());
         }
         Random random = new Random();
         String[] friend={"Facebook","Instagram","Work"};
         for (int i = 1; i<=200; i++) {
 
-            friendPerson1 = personRepository.findByName("A"+i);
+            friendPerson1 = personRepository.findByFirstName("A"+i);
             for (int j = 1; j<=10; j++) {
                 int [] rndm = new int[10];
                 int rondomFriend=random.nextInt(199)+1;
@@ -160,7 +161,7 @@ public class InsertTestData {
                 }
                 rndm[j-1]=rondomFriend;
                 if (i != rondomFriend && deger ){
-                    friendPerson2 = personRepository.findByName("A"+rondomFriend);
+                    friendPerson2 = personRepository.findByFirstName("A"+rondomFriend);
                     FriendRelationship fr = new FriendRelationship();
                     fr.setStartNode(friendPerson1);
                     fr.setEndNode(friendPerson2);
@@ -169,8 +170,8 @@ public class InsertTestData {
                     fr2.setStartNode(friendPerson2);
                     fr2.setEndNode(friendPerson1);
                     fr2.setFriendType(friend[i%3]);
-                    friendRelationshipRepository.save(fr);
-                    friendRelationshipRepository.save(fr2);
+                    friendRepository.save(fr);
+                    friendRepository.save(fr2);
                 }
                 deger=true;
             }
@@ -178,13 +179,13 @@ public class InsertTestData {
     }
     @Test
     public void relaitonTest(){
-        friendPerson2 = personRepository.findByName("A187");
-        friendPerson1 = personRepository.findByName("A194");
+        friendPerson2 = personRepository.findByFirstName("A187");
+        friendPerson1 = personRepository.findByFirstName("A194");
         FriendRelationship fr = new FriendRelationship();
         fr.setStartNode(friendPerson2);
         fr.setEndNode(friendPerson1);
         fr.setFriendType("Work");
-        friendRelationshipRepository.save(fr);
+        friendRepository.save(fr);
     }
 
 

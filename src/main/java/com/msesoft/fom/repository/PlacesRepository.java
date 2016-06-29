@@ -1,4 +1,4 @@
-package com.msesoft.fom.neo;
+package com.msesoft.fom.repository;
 
 
 import com.msesoft.fom.domain.Person;

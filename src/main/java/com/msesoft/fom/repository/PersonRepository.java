@@ -1,4 +1,4 @@
-package com.msesoft.fom.neo;
+package com.msesoft.fom.repository;
 
 import com.msesoft.fom.domain.Person;
 import org.springframework.data.neo4j.annotation.Query;
@@ -12,7 +12,6 @@ import java.util.List;
  */
 public interface PersonRepository extends GraphRepository<Person> {
 
-    Person findByName(String name);
 
     @Query("MATCH p=((o:Person{name: {nodeName} })-[:FRIEND]-()) return p")
     List<Person> findByFirstDegreeFriend(@Param("nodeName") String nodeNames);
@@ -25,6 +24,9 @@ public interface PersonRepository extends GraphRepository<Person> {
 
     Person save(Person person);
 
+    Person findByEmail(String email);
+
+    Person findByFirstName(String name);
 }
 
 

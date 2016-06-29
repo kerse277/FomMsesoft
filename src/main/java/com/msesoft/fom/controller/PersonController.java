@@ -2,7 +2,6 @@ package com.msesoft.fom.controller;
 
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.business.PersonBS;
-import com.msesoft.fom.mbusiness.MPersonBS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +18,11 @@ public class PersonController {
     @Autowired
     PersonBS personBS;
 
-    @Autowired
-    MPersonBS mMPersonBS;
 
-    @GetMapping(value = "/findByName")
+    @GetMapping(value = "/findByFirstName")
     @ResponseBody
-    public Person findByName (@RequestParam("name") String name) {
-        return personBS.findByName(name);
+    public Person findByFirstName (@RequestParam("firstName") String name) {
+        return personBS.findByFirstName(name);
     }
 
     @GetMapping(value = "/findByFirstDegreeFriend")
@@ -40,16 +37,18 @@ public class PersonController {
         return personBS.workNotFriend(name);
     }
 
-    @PostMapping(value = "/insertPerson")
+ /*   @PostMapping(value = "/insertPerson")
     @ResponseBody
-    public Person insertPerson(@RequestBody Person person) {
+    public Person insertPerson(@RequestBody MPerson mPerson) {
+       if(mPersonBS.findByEmail(mPerson.getEmail()) == null){
+        Person person = new Person();
+        person.setName(mPerson.getNameAndLastname())
+              .setEmail(mPerson.getEmail());
+        mPersonBS.insert(mPerson);
         return personBS.insertPerson(person);
+       }
+        return personBS.findByEmail(mPerson.getEmail());
     }
-
-    @PostMapping(value = "/insertMPerson")
-    @ResponseBody
-    public Person insertMperson(@RequestBody Person person) {
-        return mMPersonBS.insert(person);
-    }
+*/
 
 }

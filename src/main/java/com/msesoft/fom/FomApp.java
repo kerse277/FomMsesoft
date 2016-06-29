@@ -6,8 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "com.msesoft.fom.mongo")
-@EnableNeo4jRepositories(basePackages = "com.msesoft.fom.neo")
+@EnableNeo4jRepositories(basePackages = "com.msesoft.fom.repository")
 public class FomApp {
 
 	public static void main(String[] args) {

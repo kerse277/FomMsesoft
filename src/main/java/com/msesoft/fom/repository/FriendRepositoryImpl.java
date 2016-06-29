@@ -1,6 +1,6 @@
-package com.msesoft.fom.neo;
+package com.msesoft.fom.repository;
 
-import com.msesoft.fom.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.domain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FriendRelationshipRepositoryImpl implements FriendRelationshipRepositoryCustom{
+public class FriendRepositoryImpl implements FriendRepositoryCustom {
 
     private Neo4jOperations neo4jOperations;
 
     @Autowired
-    public FriendRelationshipRepositoryImpl(Neo4jOperations neo4jTemplate){
+    public FriendRepositoryImpl(Neo4jOperations neo4jTemplate){
         this.neo4jOperations = neo4jTemplate;
     }
 

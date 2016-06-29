@@ -1,7 +1,7 @@
-package com.msesoft.fom.neo;
+package com.msesoft.fom.repository;
 
 
-import com.msesoft.fom.relationshipdomain.WorkRelationship;
+import com.msesoft.fom.domain.WorkRelationship;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by kerse on 21.06.2016.
  */
-public interface WorkRelationshipRepository extends GraphRepository<WorkRelationship> {
+public interface WorkRepository extends GraphRepository<WorkRelationship> {
 
 
     List<WorkRelationship> findByWorkType(String workType);

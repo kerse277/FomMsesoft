@@ -15,26 +15,32 @@ import org.springframework.data.annotation.Id;
 public class Person {
 
     @GraphId
-    @Id
-    @Setter
     @Getter
     private Long id;
 
     @Getter
     @Setter
-    private String tc;
-
-    @Setter
-    @Getter
-    private String name;
-
-    @Setter
-    @Getter
-    private String surname;
+    private String uniqueId;
 
     @Getter
     @Setter
-    private String gender;
+    private String email;
+
+    @Getter
+    @Setter
+    private String password;
+
+    @Setter
+    @Getter
+    private String firstName;
+
+    @Setter
+    @Getter
+    private String lastName;
+
+    @Getter
+    @Setter
+    private char gender;
 
     @Setter
     @Getter
@@ -44,13 +50,6 @@ public class Person {
     @Getter
     private String photo;
 
-    @Getter
-    @Setter
-    private String occupation;
 
-    @Override
-    public String toString () {
-        return String.format("Person[id=%s, name='%s', surname='%s']", id,
-                name, surname);
-    }
+
 }

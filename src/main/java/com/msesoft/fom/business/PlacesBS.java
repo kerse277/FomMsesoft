@@ -2,7 +2,7 @@ package com.msesoft.fom.business;
 
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.domain.Places;
-import com.msesoft.fom.neo.PlacesRepository;
+import com.msesoft.fom.repository.PlacesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

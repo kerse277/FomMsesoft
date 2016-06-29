@@ -1,6 +1,6 @@
-package com.msesoft.fom.neo;
+package com.msesoft.fom.repository;
 
-import com.msesoft.fom.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.domain.FriendRelationship;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by kerse on 21.06.2016.
  */
-public interface FriendRelationshipRepository extends GraphRepository<FriendRelationship>, FriendRelationshipRepositoryCustom {
+public interface FriendRepository extends GraphRepository<FriendRelationship>, FriendRepositoryCustom {
 
     @Query("MATCH p=((:Person{name: {person} })-[:FRIEND]-()) return p")
     List<FriendRelationship> findFriendAll(@Param("person") String person);

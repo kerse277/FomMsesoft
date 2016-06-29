@@ -1,7 +1,7 @@
 package com.msesoft.fom.business;
 
-import com.msesoft.fom.neo.FriendRelationshipRepository;
-import com.msesoft.fom.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.repository.FriendRepository;
+import com.msesoft.fom.domain.FriendRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +14,17 @@ import java.util.List;
 public class FriendRelationshipBS {
 
     @Autowired
-    FriendRelationshipRepository friendRelationshipRepository;
+    FriendRepository friendRepository;
 
     public List<FriendRelationship> findFriendAll (String person) {
-        return friendRelationshipRepository.findFriendAll(person);
+        return friendRepository.findFriendAll(person);
     }
 
     public List<FriendRelationship> findFriendByType(String person, String type) {
-        return  friendRelationshipRepository.findFriendByType(person,type);
+        return  friendRepository.findFriendByType(person,type);
     }
     public List<FriendRelationship> friendWay(int limit, String startNode, String endNode, int length){
-        return friendRelationshipRepository.friendWay(limit,startNode,endNode,length);
+        return friendRepository.friendWay(limit,startNode,endNode,length);
     }
 
 }

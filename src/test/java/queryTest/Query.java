@@ -3,12 +3,12 @@ package queryTest;
 
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.domain.Places;
-import com.msesoft.fom.relationshipdomain.FriendRelationship;
-import com.msesoft.fom.relationshipdomain.WorkRelationship;
-import com.msesoft.fom.neo.FriendRelationshipRepository;
-import com.msesoft.fom.neo.PersonRepository;
-import com.msesoft.fom.neo.PlacesRepository;
-import com.msesoft.fom.neo.WorkRelationshipRepository;
+import com.msesoft.fom.repository.WorkRepository;
+import com.msesoft.fom.domain.FriendRelationship;
+import com.msesoft.fom.domain.WorkRelationship;
+import com.msesoft.fom.repository.FriendRepository;
+import com.msesoft.fom.repository.PersonRepository;
+import com.msesoft.fom.repository.PlacesRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +30,11 @@ public class Query {
     PersonRepository personRepository;
 
     @Autowired
-    FriendRelationshipRepository friendRelationshipRepository;
+    FriendRepository friendRepository;
 
 
     @Autowired
-    WorkRelationshipRepository workRelationshipRepository;
+    WorkRepository workRepository;
 
     @Autowired
     PlacesRepository placesRepository;
@@ -43,7 +43,7 @@ public class Query {
     public void findFriendByTypeTest () {
 
 
-        for (FriendRelationship friendRelationship: this.friendRelationshipRepository.findFriendByType("A5","Facebook")) {
+        for (FriendRelationship friendRelationship: this.friendRepository.findFriendByType("A5","Facebook")) {
             System.out.println(friendRelationship);
         }
         System.out.println();
@@ -53,13 +53,13 @@ public class Query {
     public void findFriendAllTest () {
 
 
-        for (FriendRelationship friendRelationship: this.friendRelationshipRepository.findFriendAll("A9")) {
+        for (FriendRelationship friendRelationship: this.friendRepository.findFriendAll("A9")) {
             System.out.println(friendRelationship);
         }
         System.out.println();
     }
 
-    @Test
+  /*  @Test
     public void workNotFriendTest () {
 
         List<Person> list=new ArrayList<Person>();
@@ -88,7 +88,7 @@ public class Query {
                 "Aranan kişi : " + places.getName() + " 'de çalışıyor..." + "\n" +
                 "Arkadaş ilişkiniz \n");
 
-        for (FriendRelationship friendRelationship: this.friendRelationshipRepository.friendWay(5, user,searchName, 3)) {
+        for (FriendRelationship friendRelationship: this.friendRepository.friendWay(5, user,searchName, 3)) {
             System.out.println(friendRelationship);
         }
     }/*

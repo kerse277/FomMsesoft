@@ -2,12 +2,11 @@ package controllerTest;
 
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.domain.Places;
-import com.msesoft.fom.relationshipdomain.FriendRelationship;
+import com.msesoft.fom.domain.FriendRelationship;
 import org.apache.catalina.util.ParameterMap;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,11 +18,11 @@ public class controllerRandomTest {
     @Test
     public void personTest() {
         String name = "A1";
-        String uri = new String("http://localhost:8081/person/findByName?name=" +
+        String uri = new String("http://localhost:8081/person/findByFirstName?firstName=" +
                 name);
         RestTemplate restTemplate = new RestTemplate();
         Person person = restTemplate.getForObject(uri,Person.class);
-        System.out.println(person.getName());
+        System.out.println(person.getEmail());
 
 
         uri = new String ("http://localhost:8081/person/findByFirstDegreeFriend?name=A1");
@@ -51,7 +50,7 @@ public class controllerRandomTest {
         friendList = restTemplate.getForObject(uri,FriendRelationship[].class);
         System.out.println(friendList.length);
     }
-    @Test
+ /*   @Test
     public void addPerson () {
         Person person = new Person()
                 .setSurname("YILMAZ")
@@ -69,19 +68,15 @@ public class controllerRandomTest {
     }
     @Test
     public void addMPerson () {
-        Person person = new Person()
-                .setId(1L)
-                .setSurname("YILMAZ")
-                .setHoby("Write Code")
-                .setGender("E")
-                .setOccupation("Gazi")
-                .setPhoto("/Home/Oguz/Sample")
-                .setName("OGUZ");
-        String name = "A1";
+        MPerson mPerson = new MPerson()
+                .setEmail("aaaa")
+                .setId(UUID.randomUUID().toString())
+                .setPassword("aaaa");
+
         String uri = new String("http://localhost:8081/person/insertMPerson");
         RestTemplate restTemplate = new RestTemplate();
-        person = restTemplate.postForObject(uri,person,Person.class);
-        System.out.println(person.getName());
+        mPerson = restTemplate.postForObject(uri,mPerson,MPerson.class);
+        System.out.println(mPerson.getEmail());
 
     }
 
@@ -143,6 +138,6 @@ public class controllerRandomTest {
         Places place = restTemplate.getForObject(uri,Places.class,params);
 
 
-    }
+    }*/
 
 }
