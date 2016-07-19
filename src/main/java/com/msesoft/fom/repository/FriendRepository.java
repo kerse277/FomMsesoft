@@ -12,10 +12,12 @@ import java.util.List;
  */
 public interface FriendRepository extends GraphRepository<FriendRelationship>, FriendRepositoryCustom {
 
-    @Query("MATCH p=((:Person{name: {person} })-[:FRIEND]-()) return p")
-    List<FriendRelationship> findFriendAll(@Param("person") String person);
+    @Query("MATCH p=((:Person{uniqueId: {uniqueId} })-[:FRIEND]-()) return p")
+    List<FriendRelationship> findFriendAll(@Param("uniqueId") String person);
 
-    @Query("MATCH p=((:Person{name: {person} })-[:FRIEND{friendType: {type} }]-()) return p")
-    List<FriendRelationship> findFriendByType(@Param("person") String person, @Param("type") String type);
+    @Query("MATCH p=((:Person{uniqueId: {uniqueId} })-[:FRIEND{friendType: {type} }]-()) return p")
+    List<FriendRelationship> findFriendByType(@Param("uniqueId") String person, @Param("type") String type);
 
+    @Override
+    void delete(Long id);
 }

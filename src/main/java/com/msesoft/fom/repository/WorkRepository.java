@@ -16,11 +16,13 @@ public interface WorkRepository extends GraphRepository<WorkRelationship> {
 
     List<WorkRelationship> findByWorkType(String workType);
 
-    @Query("MATCH p =((:Place {name: {placeName} })-[x:WORK {workType: {workType} }]-()) return x")
-    List<WorkRelationship> findNodeWorkTypeForPlace(@Param("placeName") String placeName, @Param("workType") String workType);
+    @Query("MATCH p =((:Place {uniqueId: {uniqueId} })-[x:WORK {workType: {workType} }]-()) return x")
+    List<WorkRelationship> findNodeWorkTypeForPlace(@Param("uniqueId") String placeName, @Param("workType") String workType);
 
-    @Query("MATCH p =((:Person {id: {id} })-[x:WORK]-()) return x")
-    WorkRelationship findNodeWorkType(@Param("id") Long nodeName);
+    @Query("MATCH p =((:Person {uniqueId: {uniqueId} })-[x:WORK]-()) return x")
+    WorkRelationship findNodeWorkType(@Param("uniqueId") String nodeName);
+
+    WorkRelationship save(WorkRelationship work);
 
 }
 

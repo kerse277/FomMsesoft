@@ -20,14 +20,14 @@ public class PlacesBS {
 
     }
 
-    public List<Person> listWorkAllNode(String place){
+    public List<Person> listWorkAllNode(String uniqueId){
 
-        return placesRepository.findWorkAllNode(place);
+        return placesRepository.findWorkAllNode(uniqueId);
     }
 
-    public Places findOne(Long id){
+    public Places findOne(String uniqueId){
 
-        return placesRepository.findOne(id);
+        return placesRepository.findByUniqueId(uniqueId);
 
     }
 
@@ -37,7 +37,7 @@ public class PlacesBS {
 
     }
 
-    public Places workSearch(Long id){
+    public Places workSearch(String id){
 
         return placesRepository.workSearch(id);
 
@@ -48,6 +48,8 @@ public class PlacesBS {
 
         return placesRepository.findByName(name);
     }
+
+
 
     public Places update(Places places,String name,String type){
 
@@ -66,9 +68,14 @@ public class PlacesBS {
 
     }
 
-    public void deletePlaces(Long id){
+    public Places deletePlaces(String uniqueId){
+        Places places=new Places();
 
-        placesRepository.delete(id);
+        places=placesRepository.findByUniqueId(uniqueId);
+        placesRepository.deletePlaces(uniqueId);
 
+        return places;
     }
+
+
 }

@@ -5,23 +5,20 @@ import com.msesoft.fom.business.WorkRelationshipBS;
 import com.msesoft.fom.domain.WorkRelationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("workrelationship")
-public class WorkRelationshipController {
+public class WorkController {
 
     @Autowired
     WorkRelationshipBS workRelationshipBS;
 
     @GetMapping(value = "workType")
     @ResponseBody
-    public WorkRelationship findNodeWorkType(@RequestParam("id") Long id) {
+    public WorkRelationship findNodeWorkType(@RequestParam("id") String id) {
         return workRelationshipBS.findNodeWorkType(id);
     }
 
@@ -37,4 +34,9 @@ public class WorkRelationshipController {
         return workRelationshipBS.findByWorkType(workType);
     }
 
+    @PostMapping(value = "save")
+    @ResponseBody
+    public WorkRelationship save (@RequestBody WorkRelationship workRelationship) {
+        return workRelationshipBS.save(workRelationship);
+    }
 }

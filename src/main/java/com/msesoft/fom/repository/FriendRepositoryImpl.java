@@ -21,7 +21,7 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
     @Override
     public List<FriendRelationship> friendWay(int limit, String startNode, String endNode, int length) {
 
-        String query = "MATCH p=((:Person{name: {startNode} })-[:FRIEND*1.." + length +"]->(:Person{name: {endNode} })) return p limit {limit}";
+        String query = "MATCH p=((:Person{uniqueId: {startNode} })-[:FRIEND*1.." + length +"]->(:Person{uniqueId: {endNode} })) return p limit {limit}";
 
         Map<String,Object> params = new HashMap<>();
         params.put("startNode", startNode);

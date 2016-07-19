@@ -31,14 +31,14 @@ public class PlacesController {
 
     @GetMapping(value = "getId")
     @ResponseBody
-    public Places placeGetId(@RequestParam("id") Long id) {
-        return placesBS.findOne(id);
+    public Places placeGetId(@RequestParam("uniqueId") String uniqueId) {
+        return placesBS.findOne(uniqueId);
     }
 
     @PostMapping(value = "update")
     @ResponseBody
     public Places update(@RequestBody Places places, @RequestParam("name") String name,@RequestParam("type") String type) {
-        return placesBS.update(places, name,type);
+        return placesBS.update(places, name, type);
     }
 
     @PostMapping(value = "insert")
@@ -47,13 +47,10 @@ public class PlacesController {
         return placesBS.dbInsert(place);
     }
 
-    @GetMapping(value = "deleteplace")
+    @GetMapping(value = "deletePlace")
     @ResponseBody
-    public Places deletePlaces(@RequestParam("id") Long id){
-        Places places=new Places();
-        places=placesBS.findOne(id);
-        placesBS.deletePlaces(id);
-        return places;
+    public Places deletePlaces(@RequestParam("uniqueId") String uniqueId){
+        return placesBS.deletePlaces(uniqueId);
     }
 
     @GetMapping(value = "listNode")
@@ -61,17 +58,19 @@ public class PlacesController {
     public List<Person> listWorkAllNode(@RequestParam("placeNeme") String placeName){
         return placesBS.listWorkAllNode(placeName);
     }
-
+/*
     @GetMapping(value = "findType")
     @ResponseBody
     public List<Places> findByType(@RequestParam("type") String type){
         return placesBS.findByType(type);
-    }
+    }*/
 
     @GetMapping(value = "personWorkSearch")
     @ResponseBody
-    public Places findByType(@RequestParam("id") Long id){
-        return placesBS.workSearch(id);
+    public Places findByType(@RequestParam("uniqueId") String uniqueId){
+        return placesBS.workSearch(uniqueId);
     }
+
+
 
 }

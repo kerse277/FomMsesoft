@@ -27,28 +27,45 @@ public class PersonController {
 
     @GetMapping(value = "/findByFirstDegreeFriend")
     @ResponseBody
-    public List<Person> findByFirstDegreeFriend(@RequestParam("name") String name) {
-        return personBS.findByFirstDegreeFriend(name);
+    public List<Person> findByFirstDegreeFriend(@RequestParam("uniqueId") String uniqueId) {
+        return personBS.findByFirstDegreeFriend(uniqueId);
+    }
+
+    @GetMapping(value = "/deletePerson")
+    @ResponseBody
+    public Person deletePlaces(@RequestParam("uniqueId") String uniqueId){
+        return personBS.deletePerson(uniqueId);
     }
 
     @GetMapping(value = "/workNotFriend")
     @ResponseBody
-    public List<Person> workNotFriend(@RequestParam("name") String name) {
-        return personBS.workNotFriend(name);
+    public List<Person> workNotFriend(@RequestParam("uniqueId") String uniqueId) {
+        return personBS.workNotFriend(uniqueId);
     }
 
- /*   @PostMapping(value = "/insertPerson")
+    @PostMapping(value = "/singUp")
     @ResponseBody
-    public Person insertPerson(@RequestBody MPerson mPerson) {
-       if(mPersonBS.findByEmail(mPerson.getEmail()) == null){
-        Person person = new Person();
-        person.setName(mPerson.getNameAndLastname())
-              .setEmail(mPerson.getEmail());
-        mPersonBS.insert(mPerson);
-        return personBS.insertPerson(person);
-       }
-        return personBS.findByEmail(mPerson.getEmail());
+    public Person insertPerson(@RequestBody Person person) {
+     return personBS.insertPerson(person);
     }
-*/
+
+    @GetMapping(value = "/singIn")
+    @ResponseBody
+    public Person singIn(@RequestParam("email") String email,@RequestParam("password") String password){
+        return personBS.singIn(email, password);
+    }
+
+    @GetMapping(value = "/updatePhoto")
+    @ResponseBody
+    public Person updatephoto(){
+        return personBS.updatephoto();
+    }
+
+    @GetMapping(value = "/secondDegreeFriend")
+    @ResponseBody
+    public List<Person> secondDegreeFriend(@RequestParam("uniqueId") String uniqueId) {
+        return personBS.secondDegreeFriend(uniqueId);
+    }
+
 
 }

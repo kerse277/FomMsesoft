@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("friendRelationShip")
-public class FriendRelationShipController {
+public class FriendController {
 
      @Autowired
      FriendRelationshipBS friendRelationshipBS;
@@ -34,6 +34,17 @@ public class FriendRelationShipController {
     @ResponseBody
     public List<FriendRelationship> friendWay(@RequestParam("limit") int limit,@RequestParam("startNode") String startNode,@RequestParam("endNode") String endNode,@RequestParam("length") int length){
         return friendRelationshipBS.friendWay(limit,startNode,endNode,length);
+    }
+
+    @PostMapping(value = "/saveFriend")
+    @ResponseBody
+    public FriendRelationship saveFriend(@RequestBody FriendRelationship friendRelationship){
+        return friendRelationshipBS.saveFriend(friendRelationship);
+    }
+    @GetMapping(value = "/deleteFriend")
+    @ResponseBody
+    public void deleteFriend(@RequestParam("id") Long id) {
+        friendRelationshipBS.deleteFriend(id);
     }
 
 

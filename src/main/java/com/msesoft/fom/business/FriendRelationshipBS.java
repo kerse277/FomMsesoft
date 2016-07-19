@@ -27,4 +27,12 @@ public class FriendRelationshipBS {
         return friendRepository.friendWay(limit,startNode,endNode,length);
     }
 
+    public FriendRelationship saveFriend(FriendRelationship friendRelationship) {
+        return friendRepository.save(friendRelationship);
+    }
+
+
+    public void deleteFriend(Long id) {
+         friendRepository.delete(id);
+    }
 }

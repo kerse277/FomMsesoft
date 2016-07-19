@@ -188,5 +188,10 @@ public class InsertTestData {
         friendRepository.save(fr);
     }
 
+    @Test
+    public void test2(){
+
+
+    }
 
 }

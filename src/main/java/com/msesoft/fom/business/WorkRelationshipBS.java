@@ -13,7 +13,7 @@ public class WorkRelationshipBS {
     @Autowired
     WorkRepository workRepository;
 
-    public WorkRelationship findNodeWorkType(Long id){
+    public WorkRelationship findNodeWorkType(String id){
 
         return workRepository.findNodeWorkType(id);
 
@@ -31,4 +31,7 @@ public class WorkRelationshipBS {
 
     }
 
+    public WorkRelationship save(WorkRelationship workRelationship) {
+        return workRepository.save(workRelationship);
+    }
 }

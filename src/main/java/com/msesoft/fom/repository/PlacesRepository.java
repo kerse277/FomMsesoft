@@ -15,11 +15,16 @@ public interface PlacesRepository extends GraphRepository<Places> {
 
     List<Places> findByType(String type);
 
-    @Query("MATCH p=((:Person{id: {id} })-[:WORK]-(r)) return r")
-    Places workSearch(@Param("id") Long id);
+    @Query("MATCH p=((:Person{uniqueId: {uniqueId} })-[:WORK]-(r)) return r")
+    Places workSearch(@Param("uniqueId") String uniqueId);
 
-    @Query("MATCH p =((:Places {name: {nodeName} })-[:WORK]-(n)) return n")
-    List<Person> findWorkAllNode(@Param("nodeName") String place);
+    @Query("MATCH p =((:Places {uniqueId: {uniqueId} })-[:WORK]-(n)) return n")
+    List<Person> findWorkAllNode(@Param("uniqueId") String place);
+
+    @Query("MATCH (n:Places{uniqueId : {uniqueId} }) DETACH Delete n")
+    void deletePlaces(String uniqueId);
 
     Places findByName(String name);
+
+    Places findByUniqueId(String uniqueId);
 }

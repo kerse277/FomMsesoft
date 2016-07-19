@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.springframework.boot:spring-boot-starter-data-neo4j:1.4.0.BUILD-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-data-neo4j/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-data-neo4j-1.4.0.BUILD-20160629.061040-314.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-data-neo4j/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-data-neo4j-1.4.0.BUILD-20160714.080027-379.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-data-neo4j/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-data-neo4j-1.4.0.BUILD-20160629.061040-314-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-data-neo4j/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-data-neo4j-1.4.0.BUILD-20160714.080027-379-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-data-neo4j/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-data-neo4j-1.4.0.BUILD-20160629.061040-314-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-data-neo4j/1.4.0.BUILD-SNAPSHOT/spring-boot-starter-data-neo4j-1.4.0.BUILD-20160714.080027-379-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

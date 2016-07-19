@@ -13,20 +13,33 @@ import java.util.List;
 public interface PersonRepository extends GraphRepository<Person> {
 
 
-    @Query("MATCH p=((o:Person{name: {nodeName} })-[:FRIEND]-()) return p")
-    List<Person> findByFirstDegreeFriend(@Param("nodeName") String nodeNames);
+    @Query("MATCH (o:Person{uniqueId: {uniqueId} })-[:FRIEND]-(p) return p")
+    List<Person> findByFirstDegreeFriend(@Param("uniqueId") String uniqueId);
 
-    @Query(" MATCH p=((o:Person{name: {person} })-[:WORK]-(n))\n" +
+    @Query(" MATCH p=((o:Person{uniqueId: {uniqueId} })-[:WORK]-(n))\n" +
             "    MATCH r=((n)-[:WORK]-(t))\n" +
             "    WHERE NOT (o)-[:FRIEND]-(t) AND NOT o = t\n" +
             "    RETURN t")
-    List<Person> workNotFriend(@Param("person") String person);
+    List<Person> workNotFriend(@Param("uniqueId") String person);
 
-    Person save(Person person);
+    @Query("MATCH (n:Person{uniqueId : {uniqueId} }) DETACH Delete n")
+    void deletePerson(String uniqueId);
+
+    @Query("match (n:Person{uniqueId: {uniqueId} })-->(:Person)-->(x:Person)\n" +
+            "with n as nNode,x as xNode , count(*) as xCount\n" +
+            "where not xNode = nNode and not (nNode)-->(xNode)\n" +
+            "return xNode")
+    List<Person> secondDegreeFriend(@Param("uniqueId") String uniqueId);
 
     Person findByEmail(String email);
 
     Person findByFirstName(String name);
+
+    Person findByUniqueId(String uniqueId);
+
+    Person findByEmailAndPassword(String email,String password);
+
+
 }
 
 

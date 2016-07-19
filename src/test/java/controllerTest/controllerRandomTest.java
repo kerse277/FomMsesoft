@@ -3,6 +3,7 @@ package controllerTest;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.domain.Places;
 import com.msesoft.fom.domain.FriendRelationship;
+import com.msesoft.fom.domain.WorkRelationship;
 import org.apache.catalina.util.ParameterMap;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
@@ -25,11 +26,11 @@ public class controllerRandomTest {
         System.out.println(person.getEmail());
 
 
-        uri = new String ("http://localhost:8081/person/findByFirstDegreeFriend?name=A1");
+        uri = new String ("http://localhost:8081/person/findByFirstDegreeFriend?uniqueId=55a2678e-5c30-4928-90a0-94151307bc11");
         Person [] personlist = restTemplate.getForObject(uri,Person[].class);
         System.out.println(personlist.length);
 
-        uri = new String("http://localhost:8081/person/workNotFriend?name=A1");
+        uri = new String("http://localhost:8081/person/workNotFriend?uniqueId=ef018a44-0560-4de6-bd5e-8efe25f79c5e");
         personlist = restTemplate.getForObject(uri,Person[].class);
         System.out.println(personlist.length);
     }
@@ -50,36 +51,21 @@ public class controllerRandomTest {
         friendList = restTemplate.getForObject(uri,FriendRelationship[].class);
         System.out.println(friendList.length);
     }
- /*   @Test
-    public void addPerson () {
+    @Test
+    public void add1Person () {
         Person person = new Person()
-                .setSurname("YILMAZ")
+                .setLastName("YILMAZ")
                 .setHoby("Write Code")
-                .setGender("E")
-                .setOccupation("Gazi")
+                .setGender('E')
                 .setPhoto("/Home/Oguz/Sample")
-                .setName("OGUZ");
+                .setFirstName("OGUZ");
         String name = "A1";
         String uri = new String("http://localhost:8081/person/insertPerson");
         RestTemplate restTemplate = new RestTemplate();
         person = restTemplate.postForObject(uri,person,Person.class);
-        System.out.println(person.getName());
+        System.out.println(person.getEmail());
 
     }
-    @Test
-    public void addMPerson () {
-        MPerson mPerson = new MPerson()
-                .setEmail("aaaa")
-                .setId(UUID.randomUUID().toString())
-                .setPassword("aaaa");
-
-        String uri = new String("http://localhost:8081/person/insertMPerson");
-        RestTemplate restTemplate = new RestTemplate();
-        mPerson = restTemplate.postForObject(uri,mPerson,MPerson.class);
-        System.out.println(mPerson.getEmail());
-
-    }
-
 
 
     @Test
@@ -115,8 +101,8 @@ public class controllerRandomTest {
     public void placesInsertTest(){
 
         Places places = new Places()
-                .setType("SPORT CLUB")
-                .setName("GAZİANTEPSPOR");
+                .setType("Computer Engineer")
+                .setName("BEAM Teknoloji");
 
 
         String uri = new String("http://localhost:8081/places/insert");
@@ -138,6 +124,112 @@ public class controllerRandomTest {
         Places place = restTemplate.getForObject(uri,Places.class,params);
 
 
-    }*/
+    }
+    @Test
+    public void addPerson() {
+
+        Person person = new Person()
+                .setUniqueId(UUID.randomUUID().toString())
+                .setPassword("atmega")
+                .setEmail("yilmazoguz94@gmail.com")
+                .setFirstName("Oğuzhan")
+                .setLastName("Yılmaz")
+                .setGender('E')
+                .setHoby("Computer")
+                .setPhoto("http://fomdb.cloudapp.net/oguz.png");
+
+        String uri = new String("http://localhost:8081/person/singUp");
+
+        RestTemplate restTamplate = new RestTemplate();
+        person = restTamplate.postForObject(uri,person,Person.class);
+    }
+
+    @Test
+    public void workkkTest () {
+
+        WorkRelationship work = new WorkRelationship();
+        Person person = new Person();
+
+        String uri = new String("http://localhost:8081/person/findByFirstName?firstName=A1");
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        person = restTemplate.getForObject(uri,Person.class);
+
+        RestTemplate r2 = new RestTemplate();
+        Places places = r2.getForObject("http://localhost:8081/places/personWorkSearch?uniqueId="+person.getUniqueId(),Places.class);
+        System.out.println(places.getName());
+    }
+    @Test
+    public void placesDeleteTest2(){
+
+        String uri = new String("http://localhost:8081/person/updatePhoto");
+
+
+        RestTemplate restTemplate = new RestTemplate();
+       Person person= restTemplate.getForObject(uri,Person.class);
+
+
+    }
+
+    @Test
+    public void personPlacesUpdate() {
+        String uri = new String("http://192.168.2.6:8081/person/findByFirstName?firstName=Oğuzhan");
+
+        RestTemplate restTemplate = new RestTemplate();
+        Person person = new Person();
+        person = restTemplate.getForObject(uri,Person.class);
+
+        WorkRelationship wr = new WorkRelationship();
+        Places places = new Places();
+        places = restTemplate.getForObject("http://192.168.2.6:8081/places/getName?name=BEAM TEKNOLOJİ",Places.class);
+
+        wr.setStartNode(person)
+                .setEndNode(places)
+                .setWorkType("ENGINEER");
+        RestTemplate r = new RestTemplate();
+        r.postForObject("http://192.168.2.6:8081/workrelationship/save",wr,WorkRelationship.class);
+
+
+    }
+    @Test
+    public void personAddFriend() {
+        String uri = new String("http://192.168.2.6:8081/person/findByFirstName?firstName=Oğuzhan");
+
+        RestTemplate restTemplate = new RestTemplate();
+        Person person = new Person();
+        person = restTemplate.getForObject(uri,Person.class);
+
+        String uri2 = new String("http://192.168.2.6:8081/person/findByFirstName?firstName=A151");
+
+        RestTemplate restTemplate2 = new RestTemplate();
+        Person person2 = new Person();
+        person2 = restTemplate2.getForObject(uri2,Person.class);
+
+
+        FriendRelationship friendRelationship = new FriendRelationship()
+                .setFriendType("Facebook")
+                .setStartNode(person)
+                .setEndNode(person2);
+
+        restTemplate.postForObject("http://192.168.2.6:8081/friendRelationShip/saveFriend",friendRelationship,FriendRelationship.class);
+        FriendRelationship friendRelationship2 = new FriendRelationship()
+                .setFriendType("Facebook")
+                .setStartNode(person2)
+                .setEndNode(person);
+
+        restTemplate.postForObject("http://192.168.2.6:8081/friendRelationShip/saveFriend",friendRelationship2,FriendRelationship.class);
+
+    }
+
+    @Test
+    public void onePersonDelete () {
+        String uri = new String("http://192.168.2.130:8081/person/findByFirstName?firstName=mehmet");
+
+        RestTemplate restTemplate = new RestTemplate();
+        Person person = new Person();
+        person = restTemplate.getForObject(uri,Person.class);
+
+    }
 
 }
