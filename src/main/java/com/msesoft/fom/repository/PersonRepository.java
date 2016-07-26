@@ -1,5 +1,6 @@
 package com.msesoft.fom.repository;
 
+import com.msesoft.fom.domain.CustomPerson;
 import com.msesoft.fom.domain.Person;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by oguz on 18.06.2016.
  */
-public interface PersonRepository extends GraphRepository<Person> {
+public interface PersonRepository extends GraphRepository<Person>,PersonRepositoryCustom {
 
 
     @Query("MATCH (o:Person{uniqueId: {uniqueId} })-[:FRIEND]-(p) return p")
@@ -24,12 +25,6 @@ public interface PersonRepository extends GraphRepository<Person> {
 
     @Query("MATCH (n:Person{uniqueId : {uniqueId} }) DETACH Delete n")
     void deletePerson(String uniqueId);
-
-    @Query("match (n:Person{uniqueId: {uniqueId} })-->(:Person)-->(x:Person)\n" +
-            "with n as nNode,x as xNode , count(*) as xCount\n" +
-            "where not xNode = nNode and not (nNode)-->(xNode)\n" +
-            "return xNode")
-    List<Person> secondDegreeFriend(@Param("uniqueId") String uniqueId);
 
     Person findByEmail(String email);
 

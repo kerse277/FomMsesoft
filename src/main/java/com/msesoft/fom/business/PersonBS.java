@@ -1,10 +1,12 @@
 package com.msesoft.fom.business;
 
+import com.msesoft.fom.domain.CustomPerson;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,14 +20,56 @@ public class PersonBS {
 
 
 
-    public Person findByFirstName(String name) {
-        return personRepository.findByFirstName(name);
+    public CustomPerson findByFirstName(String name) {
+
+        Person person = personRepository.findByFirstName(name);
+        CustomPerson customPerson = new CustomPerson()
+       .setEmail(person.getEmail())
+       .setFirstName(person.getFirstName())
+        .setLastName(person.getLastName())
+        .setGender(person.getGender())
+        .setPhoto(person.getPhoto())
+        .setHoby(person.getHoby())
+        .setUniqueId(person.getUniqueId());
+
+        return customPerson;
     }
-    public List<Person> findByFirstDegreeFriend(String uniqueId) {
-        return personRepository.findByFirstDegreeFriend(uniqueId);
+
+    public List<CustomPerson> findByFirstDegreeFriend(String uniqueId) {
+
+        List<CustomPerson> customPersonList = new ArrayList<CustomPerson>();
+        for (Person person:personRepository.findByFirstDegreeFriend(uniqueId)){
+            CustomPerson customPerson = new CustomPerson()
+            .setEmail(person.getEmail())
+            .setFirstName(person.getFirstName())
+            .setLastName(person.getLastName())
+            .setGender(person.getGender())
+            .setPhoto(person.getPhoto())
+            .setHoby(person.getHoby())
+            .setUniqueId(person.getUniqueId());
+
+            customPersonList.add(customPerson);
+        }
+
+        return customPersonList;
     }
-    public List<Person> workNotFriend(String uniqueId) {
-        return personRepository.workNotFriend(uniqueId);
+
+    public List<CustomPerson> workNotFriend(String uniqueId) {
+        List<CustomPerson> customPersonList = new ArrayList<CustomPerson>();
+        for (Person person:personRepository.workNotFriend(uniqueId)){
+            CustomPerson customPerson = new CustomPerson()
+            .setEmail(person.getEmail())
+            .setFirstName(person.getFirstName())
+            .setLastName(person.getLastName())
+            .setGender(person.getGender())
+            .setPhoto(person.getPhoto())
+            .setHoby(person.getHoby())
+            .setUniqueId(person.getUniqueId());
+
+            customPersonList.add(customPerson);
+        }
+
+        return customPersonList;
     }
 
     public Person insertPerson(Person person) {
@@ -40,13 +84,10 @@ public class PersonBS {
         return personRepository.findByEmailAndPassword(email, password);
     }
 
-    public Person deletePerson(String uniqueId) {
-        Person person = new Person();
+    public void deletePerson(String uniqueId) {
 
-        person = personRepository.findByUniqueId(uniqueId);
         personRepository.deletePerson(uniqueId);
 
-        return person;
     }
 
     public Person updatephoto() {
@@ -62,9 +103,15 @@ public class PersonBS {
         }
         return person2;
     }
-    public List<Person> secondDegreeFriend(String uniqueId) {
-        return personRepository.secondDegreeFriend(uniqueId);
+    public List<CustomPerson> findDegreeFriend(String uniqueId, String degree, String limit) {
+        return personRepository.findDegreeFriend(uniqueId,degree,limit);
     }
 
+    public void registerGCM(String uniqueId,String regId){
+        Person person = new Person();
+        person=personRepository.findByUniqueId(uniqueId);
+        person.setDeviceID(regId);
+        personRepository.save(person);
+    }
 
 }

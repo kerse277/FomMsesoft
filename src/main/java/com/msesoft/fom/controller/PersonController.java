@@ -1,5 +1,6 @@
 package com.msesoft.fom.controller;
 
+import com.msesoft.fom.domain.CustomPerson;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.business.PersonBS;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,53 +20,59 @@ public class PersonController {
     PersonBS personBS;
 
 
-    @GetMapping(value = "/findByFirstName")
+    @GetMapping(value = "findByFirstName")
     @ResponseBody
-    public Person findByFirstName (@RequestParam("firstName") String name) {
+    public CustomPerson findByFirstName (@RequestParam("firstName") String name) {
         return personBS.findByFirstName(name);
     }
 
-    @GetMapping(value = "/findByFirstDegreeFriend")
+    @GetMapping(value = "findByFirstDegreeFriend")
     @ResponseBody
-    public List<Person> findByFirstDegreeFriend(@RequestParam("uniqueId") String uniqueId) {
+    public List<CustomPerson> findByFirstDegreeFriend(@RequestParam("uniqueId") String uniqueId) {
         return personBS.findByFirstDegreeFriend(uniqueId);
     }
 
-    @GetMapping(value = "/deletePerson")
+    @GetMapping(value = "deletePerson")
     @ResponseBody
-    public Person deletePlaces(@RequestParam("uniqueId") String uniqueId){
-        return personBS.deletePerson(uniqueId);
+    public void deletePerson(@RequestParam("uniqueId") String uniqueId){
+         personBS.deletePerson(uniqueId);
     }
 
-    @GetMapping(value = "/workNotFriend")
+    @GetMapping(value = "workNotFriend")
     @ResponseBody
-    public List<Person> workNotFriend(@RequestParam("uniqueId") String uniqueId) {
+    public List<CustomPerson> workNotFriend(@RequestParam("uniqueId") String uniqueId) {
         return personBS.workNotFriend(uniqueId);
     }
 
-    @PostMapping(value = "/singUp")
+    @PostMapping(value = "singUp")
     @ResponseBody
     public Person insertPerson(@RequestBody Person person) {
      return personBS.insertPerson(person);
     }
 
-    @GetMapping(value = "/singIn")
+    @GetMapping(value = "singIn")
     @ResponseBody
     public Person singIn(@RequestParam("email") String email,@RequestParam("password") String password){
         return personBS.singIn(email, password);
     }
 
-    @GetMapping(value = "/updatePhoto")
+    @GetMapping(value = "updatePhoto")
     @ResponseBody
     public Person updatephoto(){
         return personBS.updatephoto();
     }
 
-    @GetMapping(value = "/secondDegreeFriend")
+    @GetMapping(value = "friendDegree")
     @ResponseBody
-    public List<Person> secondDegreeFriend(@RequestParam("uniqueId") String uniqueId) {
-        return personBS.secondDegreeFriend(uniqueId);
+    public List<CustomPerson> findDegreeFriend(@RequestParam("uniqueId") String uniqueId, @RequestParam("degree") String degree, @RequestParam("limit") String limit) {
+        return personBS.findDegreeFriend(uniqueId,degree,limit);
     }
 
+    @GetMapping(value = "regGCM")
+    @ResponseBody
+    public void registerGCM(@RequestParam("uniqueId") String uniqueId,@RequestParam("regId") String regId){
+
+        personBS.registerGCM(uniqueId, regId);
+    }
 
 }

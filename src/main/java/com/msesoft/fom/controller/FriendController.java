@@ -2,10 +2,14 @@ package com.msesoft.fom.controller;
 
 import com.msesoft.fom.business.FriendRelationshipBS;
 import com.msesoft.fom.domain.FriendRelationship;
+import com.msesoft.fom.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -41,6 +45,14 @@ public class FriendController {
     public FriendRelationship saveFriend(@RequestBody FriendRelationship friendRelationship){
         return friendRelationshipBS.saveFriend(friendRelationship);
     }
+
+
+
+    @GetMapping(value = "/gcmAddFriendNTF")
+    public void gcmAddFriendNTF(@RequestParam("friendAdder") String friendAdder, @RequestParam("friendAdded") String friendAdded, HttpServletRequest req, HttpServletResponse resp) {
+        friendRelationshipBS.GCMNotification(friendAdder, friendAdded, req, resp);
+    }
+
     @GetMapping(value = "/deleteFriend")
     @ResponseBody
     public void deleteFriend(@RequestParam("id") Long id) {
