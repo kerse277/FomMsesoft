@@ -44,13 +44,13 @@ public class PersonController {
         return personBS.workNotFriend(uniqueId);
     }
 
-    @PostMapping(value = "singUp")
+    @PostMapping(value = "signUp")
     @ResponseBody
     public Person insertPerson(@RequestBody Person person) {
      return personBS.insertPerson(person);
     }
 
-    @GetMapping(value = "singIn")
+    @GetMapping(value = "signIn")
     @ResponseBody
     public Person singIn(@RequestParam("email") String email,@RequestParam("password") String password){
         return personBS.singIn(email, password);

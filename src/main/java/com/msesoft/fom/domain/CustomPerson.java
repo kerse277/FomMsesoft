@@ -3,9 +3,7 @@ package com.msesoft.fom.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.springframework.data.annotation.Id;
+
 
 @Accessors(chain = true)
 public class CustomPerson {
