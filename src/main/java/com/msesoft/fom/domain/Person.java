@@ -54,5 +54,9 @@ public class Person {
     @Getter
     private String deviceID;
 
+    @Getter
+    @Setter
+    private String token;
+
 
 }

@@ -1,13 +1,17 @@
 package com.msesoft.fom.business;
 
 import com.msesoft.fom.domain.CustomPerson;
+import com.msesoft.fom.domain.MobileSession;
 import com.msesoft.fom.domain.Person;
+import com.msesoft.fom.domain.Token;
+import com.msesoft.fom.repository.MobileSessionRepository;
 import com.msesoft.fom.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by oguz on 23.06.2016.
@@ -18,7 +22,8 @@ public class PersonBS {
     @Autowired
     PersonRepository personRepository;
 
-
+    @Autowired
+    MobileSessionRepository mobileSessionRepository;
 
     public CustomPerson findByFirstName(String name) {
 
@@ -35,10 +40,10 @@ public class PersonBS {
         return customPerson;
     }
 
-    public List<CustomPerson> findByFirstDegreeFriend(String uniqueId) {
+    public List<CustomPerson> findByFirstDegreeFriend(String token) {
 
         List<CustomPerson> customPersonList = new ArrayList<CustomPerson>();
-        for (Person person:personRepository.findByFirstDegreeFriend(uniqueId)){
+        for (Person person:personRepository.findByFirstDegreeFriend(token)){
             CustomPerson customPerson = new CustomPerson()
             .setEmail(person.getEmail())
             .setFirstName(person.getFirstName())
@@ -80,8 +85,14 @@ public class PersonBS {
         return personRepository.findByEmail(email);
     }
 
-    public Person singIn(String email,String password){
-        return personRepository.findByEmailAndPassword(email, password);
+    public Token singIn(String email,String password){
+        String token = UUID.randomUUID().toString();
+        Person person = personRepository.findByEmailAndPassword(email, password);
+        person.setToken(token);
+        personRepository.save(person);
+        Token tokenModel = new Token();
+        tokenModel.setToken(token);
+        return  tokenModel;
     }
 
     public void deletePerson(String uniqueId) {
@@ -103,15 +114,37 @@ public class PersonBS {
         }
         return person2;
     }
-    public List<CustomPerson> findDegreeFriend(String uniqueId, String degree, String limit) {
-        return personRepository.findDegreeFriend(uniqueId,degree,limit);
+    public List<CustomPerson> findDegreeFriend(String token, String degree, String limit) {
+        return personRepository.findDegreeFriend(token,degree,limit);
     }
 
-    public void registerGCM(String uniqueId,String regId){
+    public void registerGCM(String token,String regId){
         Person person = new Person();
-        person=personRepository.findByUniqueId(uniqueId);
+        person=personRepository.findByToken(token);
         person.setDeviceID(regId);
         personRepository.save(person);
     }
 
+    public CustomPerson findByToken(String token) {
+        Person person = personRepository.findByToken(token);
+        CustomPerson customPerson = new CustomPerson()
+                .setEmail(person.getEmail())
+                .setFirstName(person.getFirstName())
+                .setGender(person.getGender())
+                .setHoby(person.getHoby())
+                .setLastName(person.getLastName())
+                .setPhoto(person.getPhoto())
+                .setUniqueId(person.getUniqueId());
+
+    return customPerson;
+    }
+
+    /*public Person authenticateWithToken(String token) {
+        MobileSession session = mobileSessionRepository.findByUniqueId(token);
+        if (session != null) {
+            return personRepository.findByUniqueIdIgnoreCase(session.getUniqueId());
+        }else
+            return null;
+
+    }*/
 }

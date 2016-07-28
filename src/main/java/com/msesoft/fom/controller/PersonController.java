@@ -3,11 +3,13 @@ package com.msesoft.fom.controller;
 import com.msesoft.fom.domain.CustomPerson;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.business.PersonBS;
+import com.msesoft.fom.domain.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by oguz on 22.06.2016.
@@ -28,8 +30,8 @@ public class PersonController {
 
     @GetMapping(value = "findByFirstDegreeFriend")
     @ResponseBody
-    public List<CustomPerson> findByFirstDegreeFriend(@RequestParam("uniqueId") String uniqueId) {
-        return personBS.findByFirstDegreeFriend(uniqueId);
+    public List<CustomPerson> findByFirstDegreeFriend(@RequestParam("token") String token) {
+        return personBS.findByFirstDegreeFriend(token);
     }
 
     @GetMapping(value = "deletePerson")
@@ -52,7 +54,8 @@ public class PersonController {
 
     @GetMapping(value = "signIn")
     @ResponseBody
-    public Person singIn(@RequestParam("email") String email,@RequestParam("password") String password){
+    public Token singIn(@RequestParam("email") String email, @RequestParam("password") String password){
+
         return personBS.singIn(email, password);
     }
 
@@ -64,15 +67,20 @@ public class PersonController {
 
     @GetMapping(value = "friendDegree")
     @ResponseBody
-    public List<CustomPerson> findDegreeFriend(@RequestParam("uniqueId") String uniqueId, @RequestParam("degree") String degree, @RequestParam("limit") String limit) {
-        return personBS.findDegreeFriend(uniqueId,degree,limit);
+    public List<CustomPerson> findDegreeFriend(@RequestParam("token") String token, @RequestParam("degree") String degree, @RequestParam("limit") String limit) {
+        return personBS.findDegreeFriend(token,degree,limit);
     }
 
     @GetMapping(value = "regGCM")
     @ResponseBody
-    public void registerGCM(@RequestParam("uniqueId") String uniqueId,@RequestParam("regId") String regId){
+    public void registerGCM(@RequestParam("token") String token,@RequestParam("regId") String regId){
 
-        personBS.registerGCM(uniqueId, regId);
+        personBS.registerGCM(token, regId);
+    }
+    @GetMapping(value = "/findByToken")
+    @ResponseBody
+    public CustomPerson findByToken(@RequestParam("token") String token){
+        return personBS.findByToken(token);
     }
 
 }

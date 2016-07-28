@@ -24,10 +24,10 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     }
 
     @Override
-    public List<CustomPerson> findDegreeFriend(String uniqueId, String degree, String limit) {
+    public List<CustomPerson> findDegreeFriend(String token, String degree, String limit) {
 
 
-        String query = "MATCH p=((n:Person{uniqueId: '"+uniqueId+"' })-[:FRIEND*"+degree+".."+degree+"]->(w:Person))\n" +
+        String query = "MATCH p=((n:Person{token: '"+token+"' })-[:FRIEND*"+degree+".."+degree+"]->(w:Person))\n" +
                 "with n as nNode,w as wNode , count(*) as xCount\n" +
                 "where not wNode = nNode and not (n:Person{firstName: 'A3' })-[:FRIEND*1.."+(Integer.parseInt(degree)-1)+"]->(w:Person)\n" +
                 "return wNode limit "+limit+";";

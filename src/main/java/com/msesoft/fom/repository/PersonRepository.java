@@ -14,8 +14,8 @@ import java.util.List;
 public interface PersonRepository extends GraphRepository<Person>,PersonRepositoryCustom {
 
 
-    @Query("MATCH (o:Person{uniqueId: {uniqueId} })-[:FRIEND]-(p) return p")
-    List<Person> findByFirstDegreeFriend(@Param("uniqueId") String uniqueId);
+    @Query("MATCH (o:Person{token: {token} })-[:FRIEND]-(p) return p")
+    List<Person> findByFirstDegreeFriend(@Param("token") String token);
 
     @Query(" MATCH p=((o:Person{uniqueId: {uniqueId} })-[:WORK]-(n))\n" +
             "    MATCH r=((n)-[:WORK]-(t))\n" +
@@ -32,8 +32,12 @@ public interface PersonRepository extends GraphRepository<Person>,PersonReposito
 
     Person findByUniqueId(String uniqueId);
 
-    Person findByEmailAndPassword(String email,String password);
+    Person findByEmailAndPassword(String email, String password);
 
+
+    Person findByUniqueIdIgnoreCase(String unequeId);
+
+    Person findByToken(String token);
 
 }
 
