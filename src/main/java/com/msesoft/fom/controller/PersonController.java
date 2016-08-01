@@ -4,10 +4,12 @@ import com.msesoft.fom.domain.CustomPerson;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.business.PersonBS;
 import com.msesoft.fom.domain.Token;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,8 +69,9 @@ public class PersonController {
 
     @GetMapping(value = "friendDegree")
     @ResponseBody
-    public List<CustomPerson> findDegreeFriend(@RequestParam("token") String token, @RequestParam("degree") String degree, @RequestParam("limit") String limit) {
-        return personBS.findDegreeFriend(token,degree,limit);
+    public List<CustomPerson> findDegreeFriend(@RequestParam("token") String token, @RequestParam("degree") int degree
+                                                ,@RequestParam("skip") int skip) {
+        return personBS.findDegreeFriend(token,degree,skip);
     }
 
     @GetMapping(value = "regGCM")
@@ -81,6 +84,20 @@ public class PersonController {
     @ResponseBody
     public CustomPerson findByToken(@RequestParam("token") String token){
         return personBS.findByToken(token);
+    }
+
+    @GetMapping(value = "findByUniqueId")
+    @ResponseBody
+    public CustomPerson findByUniqueId(@RequestParam("uniqueId") String uniqueId){
+        return personBS.findByUniqueId(uniqueId);
+    }
+
+    @PostMapping(value = "uploadPhoto")
+    @ResponseBody
+    public void uploadPhoto(@RequestBody byte[] base64photo){
+        byte[] decodedString = Base64.decode(base64photo.toString());
+
+            System.out.println(decodedString.toString());
     }
 
 }

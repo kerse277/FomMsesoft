@@ -1,6 +1,8 @@
 package com.msesoft.fom.business;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msesoft.fom.domain.CustomPerson;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.repository.FriendRepository;
 import com.msesoft.fom.domain.FriendRelationship;
@@ -55,12 +57,29 @@ public class FriendRelationshipBS {
         friendRepository.delete(id);
     }
 
-    public void GCMNotification(String friendAdder, String friendAdded, HttpServletRequest req, HttpServletResponse resp){
+    public void GCMNotification(String friendAdder, String friendAdded, HttpServletRequest req, HttpServletResponse resp) {
 
         String GOOGLE_SERVER_KEY = "AIzaSyB88PAc35WT1E0_tGsFv-XHwtOOdF0QCsk";
         String MESSAGE_KEY = "message";
 
+        Person person = personRepository.findByToken(friendAdder);
+        CustomPerson customPerson = new CustomPerson()
+                .setUniqueId(person.getUniqueId())
+                .setHoby(person.getHoby())
+                .setPhoto(person.getPhoto())
+                .setLastName(person.getLastName())
+                .setFirstName(person.getFirstName())
+                .setGender(person.getGender())
+                .setEmail(person.getEmail());
 
+        ObjectMapper mapper = new ObjectMapper();
+        String customPersonJSON = null;
+        try {
+
+            customPersonJSON = mapper.writeValueAsString(customPerson);
+        }catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         String regId = personRepository.findByUniqueId(friendAdded).getDeviceID();
 
@@ -71,7 +90,7 @@ public class FriendRelationshipBS {
 
         try {
             Sender sender = new Sender(GOOGLE_SERVER_KEY);
-            Message message = new Message.Builder().timeToLive(30).delayWhileIdle(true).addData(MESSAGE_KEY, "bildirim")
+            Message message = new Message.Builder().timeToLive(30).delayWhileIdle(true).addData(MESSAGE_KEY, customPersonJSON)
                     .build();
             System.out.println("regId: " + regId);
             result = sender.send(message, regId, 1);

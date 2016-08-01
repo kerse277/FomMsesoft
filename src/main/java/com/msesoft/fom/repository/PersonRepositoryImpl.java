@@ -24,15 +24,18 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     }
 
     @Override
-    public List<CustomPerson> findDegreeFriend(String token, String degree, String limit) {
+    public List<CustomPerson> findDegreeFriend(String token, int degree, int skip) {
 
 
-        String query = "MATCH p=((n:Person{token: '"+token+"' })-[:FRIEND*"+degree+".."+degree+"]->(w:Person))\n" +
+        String query = "MATCH p=((n:Person{token: {token} })-[:FRIEND*"+degree+".."+degree+"]->(w:Person))\n" +
                 "with n as nNode,w as wNode , count(*) as xCount\n" +
-                "where not wNode = nNode and not (n:Person{firstName: 'A3' })-[:FRIEND*1.."+(Integer.parseInt(degree)-1)+"]->(w:Person)\n" +
-                "return wNode limit "+limit+";";
+                "where not wNode = nNode and not (n:Person{token: {token2}  })-[:FRIEND*1.."+(degree-1)+"]->(w:Person)\n" +
+                "return wNode skip {skip} limit 12;";
 
         Map<String,Object> params = new HashMap<>();
+        params.put("token",token);
+        params.put("token2",token);
+        params.put("skip",skip);
 
         List<Person> list = new ArrayList<Person>();
         List<CustomPerson> customList = new ArrayList<CustomPerson>();

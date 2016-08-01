@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface PersonRepositoryCustom {
 
-    List<CustomPerson> findDegreeFriend(String token, String degree, String limit);
+    List<CustomPerson> findDegreeFriend(String token, int degree,int Skip);
 }

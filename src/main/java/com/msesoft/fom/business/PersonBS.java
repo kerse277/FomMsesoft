@@ -114,8 +114,8 @@ public class PersonBS {
         }
         return person2;
     }
-    public List<CustomPerson> findDegreeFriend(String token, String degree, String limit) {
-        return personRepository.findDegreeFriend(token,degree,limit);
+    public List<CustomPerson> findDegreeFriend(String token, int degree,int skip) {
+        return personRepository.findDegreeFriend(token,degree,skip);
     }
 
     public void registerGCM(String token,String regId){
@@ -138,6 +138,21 @@ public class PersonBS {
 
     return customPerson;
     }
+
+    public CustomPerson findByUniqueId(String uniqueId) {
+        Person person = personRepository.findByUniqueId(uniqueId);
+        CustomPerson customPerson = new CustomPerson()
+                .setEmail(person.getEmail())
+                .setFirstName(person.getFirstName())
+                .setGender(person.getGender())
+                .setHoby(person.getHoby())
+                .setLastName(person.getLastName())
+                .setPhoto(person.getPhoto())
+                .setUniqueId(person.getUniqueId());
+
+        return customPerson;
+    }
+
 
     /*public Person authenticateWithToken(String token) {
         MobileSession session = mobileSessionRepository.findByUniqueId(token);

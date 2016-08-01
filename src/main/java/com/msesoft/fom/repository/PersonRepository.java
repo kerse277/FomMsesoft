@@ -34,7 +34,6 @@ public interface PersonRepository extends GraphRepository<Person>,PersonReposito
 
     Person findByEmailAndPassword(String email, String password);
 
-
     Person findByUniqueIdIgnoreCase(String unequeId);
 
     Person findByToken(String token);
