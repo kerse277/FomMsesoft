@@ -1,6 +1,7 @@
 package com.msesoft.fom.controller;
 
 import com.msesoft.fom.domain.CustomPerson;
+import com.msesoft.fom.domain.Image;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.business.PersonBS;
 import com.msesoft.fom.domain.Token;
@@ -94,10 +95,8 @@ public class PersonController {
 
     @PostMapping(value = "uploadPhoto")
     @ResponseBody
-    public void uploadPhoto(@RequestBody byte[] base64photo){
-        byte[] decodedString = Base64.decode(base64photo.toString());
-
-            System.out.println(decodedString.toString());
+    public void uploadPhoto(@RequestBody Image image){
+        personBS.uploadPhoto(image);
     }
 
 }

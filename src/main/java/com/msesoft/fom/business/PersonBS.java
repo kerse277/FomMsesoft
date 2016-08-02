@@ -1,14 +1,16 @@
 package com.msesoft.fom.business;
 
-import com.msesoft.fom.domain.CustomPerson;
-import com.msesoft.fom.domain.MobileSession;
-import com.msesoft.fom.domain.Person;
-import com.msesoft.fom.domain.Token;
+import com.msesoft.fom.domain.*;
 import com.msesoft.fom.repository.MobileSessionRepository;
 import com.msesoft.fom.repository.PersonRepository;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -153,13 +155,30 @@ public class PersonBS {
         return customPerson;
     }
 
+    public void uploadPhoto(Image image) {
 
-    /*public Person authenticateWithToken(String token) {
-        MobileSession session = mobileSessionRepository.findByUniqueId(token);
-        if (session != null) {
-            return personRepository.findByUniqueIdIgnoreCase(session.getUniqueId());
-        }else
-            return null;
+        byte[] imageByteArray = Base64.decodeBase64(image.getBase64String());
+        Person person = new Person();
+//        person = personRepository.findByToken(token);
 
-    }*/
+        try {
+          /*  File filedir = new File("//var//www//html//fomPic//" + person.getUniqueId());
+            filedir.mkdir();
+            File filedir2 = new File("//var//www//html//fomPic//AnimePictures//" + person.getUniqueId() + "//media//");
+            filedir2.mkdir();
+            FileOutputStream imageOutFile = new FileOutputStream("//var//www//html//fomPic//AnimePictures//" + person.getUniqueId() + "//media//"+person.getUniqueId()+".jpg");
+       */ File filedir = new File("//var//www//html//fomPic//" + "abc");
+            filedir.mkdir();
+            File filedir2 = new File("//var//www//html//fomPic//" + "abc" + "//media//");
+            filedir2.mkdir();
+            FileOutputStream imageOutFile = new FileOutputStream("//var//www//html//fomPic//" + "abc" + "//media//abc.jpg");
+            imageOutFile.write(imageByteArray);
+            imageOutFile.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

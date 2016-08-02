@@ -3,10 +3,20 @@ package controllerTest;
 import com.msesoft.fom.domain.Person;
 import com.msesoft.fom.domain.Places;
 import com.msesoft.fom.domain.FriendRelationship;
+import com.msesoft.fom.repository.PersonRepository;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.read.biff.BiffException;
 import org.apache.catalina.util.ParameterMap;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.*;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,6 +24,9 @@ import java.util.UUID;
  * Created by oguz on 23.06.2016.
  */
 public class controllerRandomTest {
+
+    @Autowired
+    PersonRepository personRepository;
 
     @Test
     public void personTest() {
@@ -50,6 +63,172 @@ public class controllerRandomTest {
         friendList = restTemplate.getForObject(uri,FriendRelationship[].class);
         System.out.println(friendList.length);
     }
+    @Test
+    public void testPersonInsert ()  throws IOException, BiffException {
+        String uri = new String("http://localhost:8081/person/alldelete");
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject(uri,Person.class);
+
+        uri = "http://localhost:8081/person/signUp";
+        Person person = new Person();
+
+
+        String filepath = "//home//oguz//Masaüstü//Adsız Klasör//test.xls";
+
+        File fileExcel = new File(filepath);
+        WorkbookSettings ws = new WorkbookSettings();
+        ws.setEncoding("Cp1252");
+
+        Workbook workbook = Workbook.getWorkbook(fileExcel,ws);
+
+        Sheet excelPage = workbook.getSheet(0);
+
+        for(int j=0; j<excelPage.getRows(); j++)
+        {
+
+            for(int i=0; i<excelPage.getColumns(); i++)
+            {
+
+                Cell cell=excelPage.getCell(i, j);
+                switch (i) {
+                    case 0:
+                        person.setFirstName(cell.getContents());
+                        System.out.println(i+" "+cell.getContents());
+                        break;
+                    case 1:
+                        person.setLastName(cell.getContents());
+                        System.out.println(i+"  "+cell.getContents());
+                        break;
+                    case 2:
+                        person.setPassword(cell.getContents());
+                        System.out.println(i+"  "+cell.getContents());
+                        break;
+                    case 3:
+                        if (cell.getContents() ==  "Erkek")
+                        person.setGender('E');
+                        else
+                        person.setGender('K');
+                        System.out.println(i+"  "+cell.getContents());
+                        break;
+                    case 4:
+                        person.setEmail(cell.getContents());
+                        System.out.println(i+"  "+cell.getContents());
+                        break;
+                    case 5:
+                        person.setHoby(cell.getContents());
+                        System.out.println(i+"  "+cell.getContents());
+                        break;
+
+                }
+
+
+
+
+            }
+            person.setUniqueId(UUID.randomUUID().toString());
+            Person mPerson = restTemplate.postForObject(uri,person,Person.class);
+            System.out.println(mPerson.getEmail());
+
+        }
+
+
+    }
+    @Test//1268 1366
+    public void personFolder () {
+        int sayac =1;
+        for (int i=1268; i<1366; i++) {
+            Long aa =new Long(i);
+            Person person1 = personRepository.findOne(aa);
+            File file = new File("//var//www//html//fomPic//AnimePictures//"+ sayac%40+".jpg");
+            FileInputStream imageInFile = null;
+            try {
+                imageInFile = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            byte imageData[] = new byte[(int) file.length()];
+            try {
+                imageInFile.read(imageData);
+                String imageDataString = Base64.encodeBase64URLSafeString(imageData);
+                // Converting a Base64 String into Image byte array
+                byte[] imageByteArray = Base64.decodeBase64(imageDataString);
+
+                // Write a image byte array into file system
+                FileOutputStream imageOutFile = new FileOutputStream("//var//www//html//fomPic//AnimePictures//"+ person1.getUniqueId()+"//profilePicture//pro.jpg");
+                person1.setPhoto("http://192.168.2.130/fomPic/"+ person1.getUniqueId()+"/profilePicture/pro.jpg");
+                imageOutFile.write(imageByteArray);
+                imageInFile.close();
+                imageOutFile.close();
+                sayac++;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+
+
+
+
+    }
+    @Test
+    public void uploadPhoto () {
+
+    }
+    /* @Test
+    public void testPersonRepositoryInsert () {
+                                                                                                                                                 
+        personRepository.deleteAll();
+        char genders [] = {'M','F'};
+        String Hoby [] = {"Music","Art","Play Game"};
+
+        for(int i= 1; i<=200; i++) {
+
+            Person person = new Person()
+                    .setGender(genders[i%2])
+                    .setHoby(Hoby[i%3])
+                    .setFirstName("A"+i)
+                    .setPhoto("/home/photo/img.jpeg")
+                    .setLastName("B"+i)
+                    .setEmail("ab"+i+"@fom.com")
+                    .setUniqueId(UUID.randomUUID().toString());
+            person =personRepository.save(person);
+            System.out.println(person.getEmail());
+        }
+        Random random = new Random();
+        String[] friend={"Facebook","Instagram","Work"};
+        for (int i = 1; i<=200; i++) {
+
+            friendPerson1 = personRepository.findByFirstName("A"+i);
+            for (int j = 1; j<=10; j++) {
+                int [] rndm = new int[10];
+                int rondomFriend=random.nextInt(199)+1;
+
+                boolean deger=true;
+                for(int k=0;k<rndm.length;k++){
+                    if(rndm[k]==rondomFriend)
+                        deger=false;
+
+                }
+                rndm[j-1]=rondomFriend;
+                if (i != rondomFriend && deger ){
+                    friendPerson2 = personRepository.findByFirstName("A"+rondomFriend);
+                    FriendRelationship fr = new FriendRelationship();
+                    fr.setStartNode(friendPerson1);
+                    fr.setEndNode(friendPerson2);
+                    fr.setFriendType(friend[i%3]);
+                    FriendRelationship fr2 = new FriendRelationship();
+                    fr2.setStartNode(friendPerson2);
+                    fr2.setEndNode(friendPerson1);
+                    fr2.setFriendType(friend[i%3]);
+                    friendRepository.save(fr);
+                    friendRepository.save(fr2);
+                }
+                deger=true;
+            }
+        }
+    }*/
  /*   @Test
     public void addPerson () {
         Person person = new Person()
@@ -140,10 +319,5 @@ public class controllerRandomTest {
 
     }*/
 
-    @Test
-    public void testPersonInsert ()  {
 
-
-
-    }
 }
