@@ -38,6 +38,7 @@ public interface PersonRepository extends GraphRepository<Person>,PersonReposito
 
     Person findByToken(String token);
 
+
 }
 
 

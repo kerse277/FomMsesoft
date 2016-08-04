@@ -1,16 +1,14 @@
 package com.msesoft.fom.controller;
 
-import com.msesoft.fom.domain.CustomPerson;
-import com.msesoft.fom.domain.Image;
-import com.msesoft.fom.domain.Person;
+import com.msesoft.fom.domain.*;
 import com.msesoft.fom.business.PersonBS;
-import com.msesoft.fom.domain.Token;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -97,6 +95,12 @@ public class PersonController {
     @ResponseBody
     public void uploadPhoto(@RequestBody Image image){
         personBS.uploadPhoto(image);
+    }
+
+    @GetMapping(value = "media")
+    @ResponseBody
+    public CustomPerson media (@RequestParam String token) {
+        return personBS.media(token);
     }
 
 }

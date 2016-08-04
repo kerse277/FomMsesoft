@@ -7,6 +7,9 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by oguz on 18.06.2016.
  */
@@ -57,6 +60,10 @@ public class Person {
     @Getter
     @Setter
     private String token;
+
+    @Getter
+    @Setter
+    private ArrayList<String> photoList = new ArrayList<>();
 
 
 }

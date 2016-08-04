@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Accessors(chain = true)
 public class CustomPerson {
@@ -37,7 +40,9 @@ public class CustomPerson {
     @Getter
     private String photo;
 
-
+    @Getter
+    @Setter
+    private ArrayList<String> photoList = new ArrayList<>();
 
 
 }

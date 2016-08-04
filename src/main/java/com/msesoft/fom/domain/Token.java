@@ -10,4 +10,6 @@ public class Token {
     @Getter
     @Setter
     private String token;
+
+
 }

@@ -7,12 +7,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -159,26 +157,45 @@ public class PersonBS {
 
         byte[] imageByteArray = Base64.decodeBase64(image.getBase64String());
         Person person = new Person();
-//        person = personRepository.findByToken(token);
+
+        person = personRepository.findByToken(image.getToken());
+        String photoId = UUID.randomUUID().toString();
+        System.out.println(photoId);;
+        person.getPhotoList().add("http://192.168.2.130/fomPic/" + person.getUniqueId() + "/media/"+ photoId+".jpg");
+        System.out.println(person.getPhotoList());
+
+        personRepository.save(person);
 
         try {
-          /*  File filedir = new File("//var//www//html//fomPic//" + person.getUniqueId());
+            File filedir = new File("//var//www//html//fomPic//" + person.getUniqueId());
             filedir.mkdir();
-            File filedir2 = new File("//var//www//html//fomPic//AnimePictures//" + person.getUniqueId() + "//media//");
+            File filedir2 = new File("//var//www//html//fomPic//" + person.getUniqueId() + "//media//");
             filedir2.mkdir();
-            FileOutputStream imageOutFile = new FileOutputStream("//var//www//html//fomPic//AnimePictures//" + person.getUniqueId() + "//media//"+person.getUniqueId()+".jpg");
-       */ File filedir = new File("//var//www//html//fomPic//" + "abc");
-            filedir.mkdir();
-            File filedir2 = new File("//var//www//html//fomPic//" + "abc" + "//media//");
-            filedir2.mkdir();
-            FileOutputStream imageOutFile = new FileOutputStream("//var//www//html//fomPic//" + "abc" + "//media//abc.jpg");
+            FileOutputStream imageOutFile = new FileOutputStream("//var//www//html//fomPic//" + person.getUniqueId() + "//media//"+photoId+".jpg");
             imageOutFile.write(imageByteArray);
             imageOutFile.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public CustomPerson media(String token) {
+        Person person = new Person();
+        CustomPerson customPerson = new CustomPerson();
+
+        person = personRepository.findByToken(token);
+
+        customPerson.setFirstName(person.getFirstName())
+                .setLastName(person.getLastName())
+                .setEmail(person.getEmail())
+                .setPhotoList(person.getPhotoList())
+                .setUniqueId(person.getUniqueId())
+                .setHoby(person.getHoby())
+                .setGender(person.getGender());
+
+        return customPerson;
     }
 }
